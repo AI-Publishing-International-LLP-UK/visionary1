@@ -1,0 +1,42 @@
+domains:
+  - name: example.com
+    status: active
+    cloud_run:
+      service_name: example-service
+      region: us-central1
+      resources:
+        cpu: 1
+        memory: 512Mi
+      min_instances: 1
+      max_instances: 10
+    dns:
+      provider: cloud_dns
+      records:
+        - type: A
+          ttl: 300
+          target: ghs.googlehosted.com
+    monitoring:
+      uptime_check: true
+      ssl_expiry_alert: true
+      response_time_threshold: 500  # ms
+
+  - name: api.example.com
+    status: planned
+    cloud_run:
+      service_name: api-service
+      region: us-central1
+      resources:
+        cpu: 2
+        memory: 1Gi
+      min_instances: 2
+      max_instances: 20
+    dns:
+      provider: cloud_dns
+      records:
+        - type: CNAME
+          ttl: 300
+          target: ghs.googlehosted.com
+    monitoring:
+      uptime_check: true
+      ssl_expiry_alert: true
+      response_time_threshold: 200  # ms
